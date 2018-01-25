@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
-namespace Messenger.Services.IOS
+namespace Messenger.AutofacModules
 {
-	public class Class1
+	public class CoreModule : Module
 	{
 	}
 }
