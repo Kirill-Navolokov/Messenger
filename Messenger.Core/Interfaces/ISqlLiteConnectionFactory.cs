@@ -8,5 +8,7 @@ namespace Messenger.Core.Interfaces
 		void SetConnection(SQLiteAsyncConnection connection);
 
 		Task Initialize();
+
+		SQLiteAsyncConnection Connection { get; }
     }
 }

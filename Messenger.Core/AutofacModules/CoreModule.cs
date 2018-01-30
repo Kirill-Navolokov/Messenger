@@ -9,6 +9,7 @@ namespace Messenger.Core.AutofacModules
 		protected override void Load(ContainerBuilder builder)
 		{
 			builder.RegisterType<SqlLiteConnectionFactory>().As<ISqlLiteConnectionFactory>();
+			builder.RegisterType<DefaultDataProvider>().As<IDefaultDataProvider>();
 
 			base.Load(builder);
 		}

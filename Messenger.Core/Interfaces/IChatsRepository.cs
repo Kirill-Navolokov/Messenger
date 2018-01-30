@@ -10,7 +10,7 @@ namespace Messenger.Core.Interfaces
 		
 		Task DeleteChatAsync(int id);
 
-		Task<IEnumerable<Chat>> GetChatsAync();
+		Task<IEnumerable<Chat>> GetChatsAsync();
 
 		Task<Chat> GetChatAsync(int id);
     }

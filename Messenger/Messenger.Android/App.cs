@@ -26,7 +26,7 @@ namespace Messenger.Droid
 			base.OnCreate();
 		}
 
-		public async void Initialize()
+		private async  void Initialize()
 		{
 			RegisterIoCmodules();
 
@@ -42,13 +42,14 @@ namespace Messenger.Droid
 			Container = builder.Build();
 		}
 
-		private async Task SetUpDatabaseConnection()
+		private Task SetUpDatabaseConnection()
 		{
 			var sqlLiteConnection = Container.Resolve<IDbConnection>();
 			var sqLiteConnectionFactory = Container.Resolve<ISqlLiteConnectionFactory>();
+			var connection = sqlLiteConnection.GetConnection();
 
-			sqLiteConnectionFactory.SetConnection(sqlLiteConnection.GetConnection());
-			await sqLiteConnectionFactory.Initialize();	
+			sqLiteConnectionFactory.SetConnection(connection);
+			return sqLiteConnectionFactory.Initialize();
 		}
-	}	
+	}
 }

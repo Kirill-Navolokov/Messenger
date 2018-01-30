@@ -7,7 +7,9 @@ namespace Messenger.Core.Implementations
 {
 	public class SqlLiteConnectionFactory : ISqlLiteConnectionFactory
 	{
-		private SQLiteAsyncConnection _asyncConnection;
+		private static SQLiteAsyncConnection _asyncConnection;
+
+		public SQLiteAsyncConnection Connection => _asyncConnection;
 
 		public Task Initialize()
 		{

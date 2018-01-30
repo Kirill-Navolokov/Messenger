@@ -101,18 +101,20 @@
     <Compile Include="App.cs" />
     <Compile Include="AutofacModules\DroidModule.cs" />
     <Compile Include="Implementations\DbConnection.cs" />
-    <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Views\ChatsPage\ChatsPageView.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Properties\AndroidManifest.xml" />
     <None Include="Assets\AboutAssets.txt" />
+    <AndroidResource Include="Resources\layout\chats_page.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\layout\Main.axml" />
     <AndroidResource Include="Resources\values\Strings.xml" />
     <AndroidResource Include="Resources\drawable-hdpi\Icon.png" />
     <AndroidResource Include="Resources\drawable-mdpi\Icon.png" />
