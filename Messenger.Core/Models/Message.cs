@@ -2,16 +2,12 @@
 
 namespace Messenger.Core.Models
 {
-    public class Message
+    public class Message :BaseModel
     {
-		public User Author { get; set; }
+		public virtual User Author { get; set; }
 
 		public string Content { get; set; }
-
-		public int Id { get; set; }
-
-		public bool IsDeleted { get; set; }
-
+		
 		public DateTime SendDate { get; set; }
     }
 }

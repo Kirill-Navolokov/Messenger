@@ -1,20 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace Messenger.Core.Models
 {
-    public class Chat
+    public class Chat : BaseModel
     {
-		public int Id { get; set; }
-
-		public bool IsDeleted { get; set; }
-
 		public bool IsPrivate { get; set; }
 
-		public List<User> Members { get; set; } = new List<User>();
+		public virtual ICollection<User> Members { get; set; } = new List<User>();
 
-		public List<Message> Messages { get; set; } = new List<Message>();
+		public virtual ICollection<Message> Messages { get; set; } = new List<Message>();
 
 		public string Name { get; set; }
     }

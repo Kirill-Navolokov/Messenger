@@ -2,52 +2,54 @@
 using System.Threading.Tasks;
 using Messenger.Core.Interfaces;
 using Messenger.Core.Models;
-using SQLite;
+using Messenger.Core.DbInitializing;
+using Microsoft.EntityFrameworkCore;
 
 namespace Messenger.Core.Implementations
 {
 	public class ChatsRepository : IChatsRepository
 	{
-		private SQLiteAsyncConnection _connection;
+		private MessengerContext _dbContext;
 
-		public ChatsRepository(ISqlLiteConnectionFactory sqlLiteConnectionFactory)
+		public ChatsRepository(MessengerContext dbContext)
 		{
-			_connection = sqlLiteConnectionFactory.Connection;
+			_dbContext = dbContext;
 		}
 
-		public Task<Chat> CreateChatAsync(Chat chat)
+		public async Task<Chat> CreateChatAsync(Chat chat)
 		{
-			var lastId = GetLastChatId();
-			chat.Id = lastId + 1;
-			_connection.InsertAsync(chat);
+			await _dbContext.Chats.AddAsync(chat);
 
-			return GetChatAsync(chat.Id);
+			await _dbContext.SaveChangesAsync();
+
+			var lastId = GetLastChatId();
+			
+			return await GetChatAsync(lastId);
 		}
 
 		public async Task DeleteChatAsync(int id)
 		{
 			var chat = await GetChatAsync(id);
+			chat.IsDeleted = true;
 
-			await _connection.DeleteAsync(chat);
+			 _dbContext.Chats.Update(chat);
+
+			await _dbContext.SaveChangesAsync();
 		}
 
-		public async Task<Chat> GetChatAsync(int id)
+		public Task<Chat> GetChatAsync(int id)
 		{
-			return await _connection.Table<Chat>()
-									.Where(chat => chat.Id == id)
-									.FirstAsync();
+			return _dbContext.Chats.FindAsync(id);
 		}
 
 		public async Task<IEnumerable<Chat>> GetChatsAsync()
 		{
-			return await _connection.Table<Chat>().ToListAsync();
+			return await _dbContext.Chats.ToListAsync();
 		}
 
 		private int GetLastChatId()
 		{
-			return _connection.Table<Chat>()
-							  .OrderByDescending(chat => chat.Id)
-							  .FirstAsync().Id;
+			return _dbContext.Chats.LastAsync(x => !x.IsDeleted).Id;
 		}
 	}
 }
