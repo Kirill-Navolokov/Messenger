@@ -6,12 +6,12 @@ namespace Messenger.Core.Interfaces
 {
 	public interface IChatsRepository
     {
-		Task<Chat> CreateChatAsync(Chat chat);
+		Task<Chat> CreateAsync(Chat chat);
 		
-		Task DeleteChatAsync(int id);
+		Task DeleteAsync(int id);
 
-		Task<IEnumerable<Chat>> GetChatsAsync();
+		Task<IEnumerable<Chat>> GetAllAsync();
 
-		Task<Chat> GetChatAsync(int id);
+		Task<Chat> GetAsync(int id);
     }
 }

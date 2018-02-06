@@ -9,6 +9,7 @@ namespace Messenger.Droid.AutofacModules
 		protected override void Load(ContainerBuilder builder)
 		{
 			builder.RegisterType<DbConnection>().As<IDbConnection>();
+
 			base.Load(builder);
 		}
 	}

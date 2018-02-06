@@ -17,7 +17,7 @@ namespace Messenger.Core.ViewModels
 
 			_setChatsCommand = ReactiveCommand.Create(async () =>
 			{
-				var chats = await _chatsRepository.GetChatsAsync();
+				var chats = await _chatsRepository.GetAllAsync();
 				Chats.AddRange(chats);
 			});
 		}

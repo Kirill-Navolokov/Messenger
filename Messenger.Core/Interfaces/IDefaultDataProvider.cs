@@ -4,6 +4,6 @@ namespace Messenger.Core.Interfaces
 {
 	public interface IDefaultDataProvider
     {
-		void CheckAndCreateDefaultChat();
+		Task CheckAndCreateDefaultChat();
     }
 }

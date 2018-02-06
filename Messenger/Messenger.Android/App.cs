@@ -7,10 +7,11 @@ using Messenger.Droid.AutofacModules;
 using Messenger.Core.AutofacModules;
 using Messenger.Core.Interfaces;
 using System.Threading.Tasks;
+using Messenger.Core.DbInitializing;
 
 namespace Messenger.Droid
 {
-	[Application]
+	[Application(HardwareAccelerated = true)]
 	public class App : Application
 	{
 		public App(IntPtr handle, JniHandleOwnership ownerShip) : base(handle, ownerShip)
@@ -26,11 +27,11 @@ namespace Messenger.Droid
 			base.OnCreate();
 		}
 
-		private async  void Initialize()
+		private void Initialize()
 		{
 			RegisterIoCmodules();
 
-			await SetUpDatabaseConnection();
+			//SetUpDatabaseConnection();
 		}
 
 		private void RegisterIoCmodules()
@@ -42,14 +43,15 @@ namespace Messenger.Droid
 			Container = builder.Build();
 		}
 
-		private Task SetUpDatabaseConnection()
+		private async void SetUpDatabaseConnection()
 		{
-			var sqlLiteConnection = Container.Resolve<IDbConnection>();
-			var sqLiteConnectionFactory = Container.Resolve<ISqlLiteConnectionFactory>();
-			var connection = sqlLiteConnection.GetConnection();
-
-			sqLiteConnectionFactory.SetConnection(connection);
-			return sqLiteConnectionFactory.Initialize();
+			await Task.Run(async() =>
+			{
+				//var dbConnection = Container.Resolve<IDbConnection>();
+				//var connectionString = dbConnection.GetConnection();
+				
+				
+			});
 		}
 	}
 }

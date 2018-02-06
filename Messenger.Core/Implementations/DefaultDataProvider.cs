@@ -1,42 +1,41 @@
 ﻿using Messenger.Core.Interfaces;
 using Messenger.Core.Models;
-using SQLite;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Messenger.Core.Implementations
 {
-	public class DefaultDataProvider : IDefaultDataProvider
+    public class DefaultDataProvider : IDefaultDataProvider
 	{
-		private SQLiteAsyncConnection _connection;
+        private readonly IChatsRepository _chatsRepository;
 
-		private User _firstUser;
+        private User _firstUser;
 
 		private User _secondUser;
 
 		private Message _firstMessage;
 
 		private Message _secondMessage;
-
-		private List<Chat> _defaultChats { get; set; } = new List<Chat>();
-
-		public DefaultDataProvider(ISqlLiteConnectionFactory sqlLiteConnectionFactory)
+        
+		public DefaultDataProvider(IChatsRepository chatsRepository)
 		{
-			_connection = sqlLiteConnectionFactory.Connection;
+            _chatsRepository = chatsRepository;
 		}
 
-		public async void CheckAndCreateDefaultChat()
+        private List<Chat> _defaultChats { get; set; } = new List<Chat>();
+
+        public async Task CheckAndCreateDefaultChat()
 		{
-			var defaultChats =  _connection.Table<Chat>();
+            var defaultChats = await _chatsRepository.GetAllAsync();
 
 			if (_defaultChats.Count == 0)
 			{
-				CreateChatAsync();
+				await CreateChatAsync();
 			}
 		}
 
-		private async void CreateChatAsync()
+		private async Task CreateChatAsync()
 		{
 			await CreateUsers();
 
@@ -48,6 +47,8 @@ namespace Messenger.Core.Implementations
 			chat.Members.Add(_secondUser);
 			chat.Messages.Add(_firstMessage);
 			chat.Messages.Add(_secondMessage);
+
+            await _chatsRepository.CreateAsync(chat);
 		}
 
 		private async Task CreateUsers()

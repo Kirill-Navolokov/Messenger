@@ -25,9 +25,8 @@ namespace Messenger.Droid.Views.ChatsPage
 
 			SetContentView(Resource.Layout.chats_page);
 
-			var defaultDataProvider = App.Container.Resolve<IDefaultDataProvider>();
-
-			defaultDataProvider.CheckAndCreateDefaultChat();
+			var dbInitializer = App.Container.Resolve<IDbInitialier>();
+			dbInitializer.FillDatabaseWithDefaultData();
 		}
 	}
 }

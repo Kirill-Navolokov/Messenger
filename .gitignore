@@ -259,3 +259,5 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+/Messenger/Messenger.Android/Messenger.Droid.csproj.bak
+/Messenger.Services.Droid/Messenger.Services.Droid.csproj.bak

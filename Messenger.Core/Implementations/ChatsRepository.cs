@@ -16,7 +16,7 @@ namespace Messenger.Core.Implementations
 			_dbContext = dbContext;
 		}
 
-		public async Task<Chat> CreateChatAsync(Chat chat)
+		public async Task<Chat> CreateAsync(Chat chat)
 		{
 			await _dbContext.Chats.AddAsync(chat);
 
@@ -24,12 +24,12 @@ namespace Messenger.Core.Implementations
 
 			var lastId = GetLastChatId();
 			
-			return await GetChatAsync(lastId);
+			return await GetAsync(lastId);
 		}
 
-		public async Task DeleteChatAsync(int id)
+		public async Task DeleteAsync(int id)
 		{
-			var chat = await GetChatAsync(id);
+			var chat = await GetAsync(id);
 			chat.IsDeleted = true;
 
 			 _dbContext.Chats.Update(chat);
@@ -37,12 +37,12 @@ namespace Messenger.Core.Implementations
 			await _dbContext.SaveChangesAsync();
 		}
 
-		public Task<Chat> GetChatAsync(int id)
+		public Task<Chat> GetAsync(int id)
 		{
 			return _dbContext.Chats.FindAsync(id);
 		}
 
-		public async Task<IEnumerable<Chat>> GetChatsAsync()
+		public async Task<IEnumerable<Chat>> GetAllAsync()
 		{
 			return await _dbContext.Chats.ToListAsync();
 		}

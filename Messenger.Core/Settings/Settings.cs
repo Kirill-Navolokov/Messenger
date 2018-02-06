@@ -2,6 +2,6 @@
 {
 	public class Settings
     {
-		public const string DatabaseName = "Messenged.db3";
+		public const string DatabaseName = "Messenged.db";
     }
 }
